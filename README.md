@@ -1,5 +1,6 @@
 # Rifa solidaria · Laura Zuluaga
 
+
 Plataforma de rifa de 500 números ($50.000 c/u) con:
 
 - **Página pública** (`/`): cuadrícula de números, selección múltiple, formulario (nombre + celular) y datos de pago (Nequi y Bre-B). Los números apartados quedan bloqueados para todos al instante.

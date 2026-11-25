@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Rifa solidaria · Laura Zuluaga</title>
+  <meta name="description" content="Una madre empresaria necesita ayuda para recuperar a sus hijos. Participa en la rifa de un paquete de obras artísticas." />
+  <meta property="og:title" content="Rifa solidaria · Laura Zuluaga" />
+  <meta property="og:description" content="Una madre empresaria necesita ayuda para recuperar a sus hijos. Elige tu número y participa." />
+  <meta name="theme-color" content="#b5462e" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Fraunces:opsz,wght@9..144,500;9..144,700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* ── Encabezado ── */
+    .hero { padding: 40px 0 28px; }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 8px; font-weight: 600; font-size: .85rem;
+      letter-spacing: .06em; text-transform: uppercase; color: var(--accent);
+    }
+    .eyebrow::before { content: ""; width: 22px; height: 2px; background: currentColor; }
+    .hero h1 {
+      font-family: var(--display); font-weight: 700; letter-spacing: -.01em;
+      font-size: clamp(2rem, 5.6vw, 3.4rem); line-height: 1.08; margin: 14px 0 12px; max-width: 18ch;
+    }
+    .hero .by { color: var(--muted); font-size: 1.05rem; margin: 0; }
+    .hero .by strong { color: var(--ink); }
+
+    .prize {
+      margin-top: 26px; display: grid; gap: 1px; background: var(--line);
+      border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow);
+      grid-template-columns: 1fr 1fr;
+    }
+    .prize > div { background: var(--paper); padding: 16px 18px; }
+    .prize .main { grid-column: 1 / -1; background: var(--plum); color: #fff; padding: 20px 18px; }
+    .prize .k { font-size: .8rem; text-transform: uppercase; letter-spacing: .06em; opacity: .75; font-weight: 600; }
+    .prize .v { font-family: var(--display); font-size: 1.35rem; font-weight: 700; line-height: 1.2; margin-top: 2px; }
+    .prize .main .v { font-size: 1.6rem; }
+    .prize .main .sub { opacity: .85; margin-top: 2px; }
+    @media (min-width: 760px) {
+      .prize { grid-template-columns: 2fr 1fr 1fr; }
+      .prize .main { grid-column: auto; }
+    }
+
+    .progress { margin-top: 22px; }
+    .progress-top { display: flex; justify-content: space-between; font-size: .92rem; margin-bottom: 8px; }
+    .progress-top strong { font-variant-numeric: tabular-nums; }
+    .bar { height: 10px; background: var(--taken); border-radius: 99px; overflow: hidden; }
+    .bar span { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--accent), var(--gold)); border-radius: 99px; transition: width .8s ease; }
+
+    /* ── Pasos ── */
+    .steps { display: grid; gap: 10px; margin: 30px 0 8px; counter-reset: s; }
+    @media (min-width: 760px) { .steps { grid-template-columns: repeat(3, 1fr); } }
+    .step { display: flex; gap: 12px; align-items: flex-start; }
+    .step::before {
+      counter-increment: s; content: counter(s); flex: none; width: 30px; height: 30px; border-radius: 50%;
+      display: grid; place-items: center; font-weight: 700; background: var(--ink); color: #fff; font-size: .9rem;
+    }
+    .step b { display: block; }
+    .step span { color: var(--muted); font-size: .92rem; }
+
+    /* ── Cuadrícula ── */
+    .board { background: var(--paper); border-radius: var(--radius); box-shadow: var(--shadow); padding: 18px 14px 22px; margin: 26px 0 40px; }
+    @media (min-width: 640px) { .board { padding: 24px; } }
+    .board-head { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+    .board-head h2 { font-family: var(--display); font-size: 1.5rem; margin: 0; }
+    .tools { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+    .tools input[type="search"] {
+      width: 130px; padding: 9px 12px; border-radius: 999px; border: 1.5px solid var(--line); background: #fff; outline: none;
+    }
+    .tools input[type="search"]:focus { border-color: var(--accent); }
+    .toggle { display: inline-flex; align-items: center; gap: 6px; font-size: .9rem; cursor: pointer; user-select: none; }
+    .toggle input { accent-color: var(--accent); width: 16px; height: 16px; }
+
+    .legend { display: flex; flex-wrap: wrap; gap: 14px; font-size: .85rem; color: var(--muted); margin-bottom: 14px; }
+    .legend i { display: inline-block; width: 14px; height: 14px; border-radius: 4px; vertical-align: -2px; margin-right: 5px; }
+    .lg-free { background: #fff; box-shadow: inset 0 0 0 1.5px var(--line); }
+    .lg-sel { background: var(--accent); }
+    .lg-res { background: var(--taken); background-image: repeating-linear-gradient(135deg, transparent 0 3px, rgba(122,104,95,.25) 3px 4px); }
+    .lg-paid { background: var(--paid); }
+
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(50px, 1fr)); gap: 6px; }
+    @media (max-width: 420px) { .grid { grid-template-columns: repeat(6, 1fr); gap: 5px; } }
+    .n {
+      aspect-ratio: 1; border: 0; border-radius: 10px; cursor: pointer; background: #fff;
+      box-shadow: inset 0 0 0 1.5px var(--line); font-weight: 600; font-size: .95rem;
+      font-variant-numeric: tabular-nums; transition: transform .1s ease, background .15s ease, box-shadow .15s;
+      padding: 0;
+    }
+    .n:hover:not(:disabled) { box-shadow: inset 0 0 0 2px var(--accent); }
+    .n:active:not(:disabled) { transform: scale(.92); }
+    .n.sel { background: var(--accent); color: #fff; box-shadow: none; }
+    .n.res {
+      cursor: not-allowed; color: #b3a196; box-shadow: none; background: var(--taken);
+      background-image: repeating-linear-gradient(135deg, transparent 0 4px, rgba(122,104,95,.18) 4px 5px);
+    }
+    .n.paid { cursor: not-allowed; background: var(--paid); color: rgba(255,255,255,.45); box-shadow: none; }
+    .n.flash { animation: flash 1.2s ease 2; }
+    @keyframes flash { 50% { box-shadow: inset 0 0 0 3px var(--gold); transform: scale(1.1); } }
+    .n.hide { display: none; }
+    .loading { text-align: center; color: var(--muted); padding: 40px 0; }
+
+    /* ── Barra de selección ── */
+    .cart {
+      position: fixed; left: 0; right: 0; bottom: 0; z-index: 40; padding: 12px 0 calc(12px + env(safe-area-inset-bottom));
+      background: var(--ink); color: #fff; transform: translateY(110%); transition: transform .25s ease;
+      box-shadow: 0 -8px 30px rgba(0,0,0,.2);
+    }
+    .cart.show { transform: translateY(0); }
+    .cart .wrap { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .cart .info { min-width: 0; }
+    .cart .count { font-size: .85rem; opacity: .75; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .cart .sum { font-family: var(--display); font-size: 1.35rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+    .cart .actions { display: flex; gap: 8px; flex: none; }
+    .cart .btn.ghost { color: #fff; box-shadow: inset 0 0 0 1.5px rgba(255,255,255,.3); }
+    .cart .btn.ghost:hover { background: rgba(255,255,255,.08); }
+    body.has-cart { padding-bottom: 90px; }
+
+    /* ── Pago ── */
+    .pay { margin: 0 0 40px; }
+    .pay h2 { font-family: var(--display); font-size: 1.5rem; margin: 0 0 12px; }
+    .pay-grid { display: grid; gap: 12px; }
+    @media (min-width: 760px) { .pay-grid { grid-template-columns: 1fr 1fr; } }
+    .method { background: var(--paper); border-radius: var(--radius); box-shadow: var(--shadow); padding: 18px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .method .k { font-size: .8rem; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); font-weight: 600; }
+    .method .v { font-size: 1.3rem; font-weight: 700; font-variant-numeric: tabular-nums; word-break: break-all; }
+    .qr { background: #fff; border-radius: 14px; padding: 12px; width: 220px; margin: 6px auto 0; box-shadow: inset 0 0 0 1.5px var(--line); }
+
+    .done-total { font-family: var(--display); font-size: 2rem; font-weight: 700; margin: 4px 0 14px; }
+    .methods-mini { display: grid; gap: 8px; margin: 14px 0; }
+    .methods-mini .method { box-shadow: inset 0 0 0 1.5px var(--line); padding: 12px 14px; }
+    .methods-mini .v { font-size: 1.1rem; }
+    .notice { background: var(--warn-soft); color: var(--warn); border-radius: 12px; padding: 12px 14px; font-size: .9rem; margin: 14px 0; }
+    .hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+    .check { display: flex; gap: 10px; align-items: flex-start; font-size: .88rem; color: var(--muted); margin: 4px 0 14px; }
+    .check input { margin-top: 3px; accent-color: var(--accent); width: 16px; height: 16px; flex: none; }
+
+    footer { border-top: 1px solid var(--line); padding: 22px 0 36px; color: var(--muted); font-size: .85rem; text-align: center; }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="wrap">
+      <span class="eyebrow">Rifa solidaria</span>
+      <h1 id="titulo">Una madre empresaria necesita ayuda para recuperar a sus hijos</h1>
+      <p class="by">Organiza <strong id="organiza">Laura Zuluaga</strong></p>
+
+      <div class="prize">
+        <div class="main">
+          <div class="k">Se rifa</div>
+          <div class="v" id="premio">Paquete de obras artísticas</div>
+          <div class="sub">Valorizado en <strong id="valor">$12.000.000</strong></div>
+        </div>
+        <div><div class="k">Cada número</div><div class="v" id="precio">$50.000</div></div>
+        <div><div class="k" id="fecha-k">Números</div><div class="v" id="fecha-v">500</div></div>
+      </div>
+
+      <div class="progress">
+        <div class="progress-top"><span>Números apartados</span><strong id="prog-txt">—</strong></div>
+        <div class="bar"><span id="prog-bar"></span></div>
+      </div>
+
+      <div class="steps">
+        <div class="step"><div><b>Elige tus números</b><span>Toca uno o varios en la cuadrícula.</span></div></div>
+        <div class="step"><div><b>Déjanos tus datos</b><span>Nombre completo y celular de contacto.</span></div></div>
+        <div class="step"><div><b>Paga y envía el comprobante</b><span>Por Nequi o Bre-B. Te confirmamos por WhatsApp.</span></div></div>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="board" aria-labelledby="h-grid">
+      <div class="board-head">
+        <h2 id="h-grid">Elige tu número</h2>
+        <div class="tools">
+          <input type="search" id="buscar" inputmode="numeric" placeholder="Buscar nº" aria-label="Buscar número" />
+          <label class="toggle"><input type="checkbox" id="solo-libres" /> Solo disponibles</label>
+        </div>
+      </div>
+      <div class="legend">
+        <span><i class="lg-free"></i>Disponible</span>
+        <span><i class="lg-sel"></i>Tu selección</span>
+        <span><i class="lg-res"></i>Apartado</span>
+        <span><i class="lg-paid"></i>Pagado</span>
+      </div>
+      <div class="grid" id="grid"><div class="loading">Cargando números…</div></div>
+    </section>
+
+    <section class="pay" id="pago">
+      <h2>Cómo pagar</h2>
+      <div class="pay-grid" id="pay-grid"></div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">Rifa organizada por <span id="foot-org">Laura Zuluaga</span>. Los números se confirman una vez verificado el pago.</div>
+  </footer>
+
+  <!-- Barra de selección -->
+  <div class="cart" id="cart">
+    <div class="wrap">
+      <div class="info">
+        <div class="count" id="cart-count"></div>
+        <div class="sum" id="cart-sum"></div>
+      </div>
+      <div class="actions">
+        <button class="btn ghost sm" id="cart-clear" type="button">Limpiar</button>
+        <button class="btn" id="cart-go" type="button">Continuar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: datos -->
+  <div class="modal" id="m-form" role="dialog" aria-modal="true" aria-labelledby="mf-t">
+    <div class="modal-card">
+      <button class="modal-close" data-close aria-label="Cerrar">×</button>
+      <h3 id="mf-t">Aparta tus números</h3>
+      <div class="chips" id="mf-chips" style="margin:10px 0 4px"></div>
+      <p class="hint" id="mf-total" style="margin:6px 0 18px"></p>
+      <form id="form" novalidate>
+        <div class="field">
+          <label for="f-nombre">Nombre completo</label>
+          <input id="f-nombre" name="nombre" autocomplete="name" required maxlength="80" placeholder="Ej. María Fernanda Gómez" />
+        </div>
+        <div class="field">
+          <label for="f-cel">Celular de contacto</label>
+          <input id="f-cel" name="celular" type="tel" inputmode="numeric" autocomplete="tel" required maxlength="14" placeholder="300 123 4567" />
+          <span class="hint">Por aquí te confirmamos el pago y te avisamos si ganas.</span>
+        </div>
+        <input class="hp" name="web" tabindex="-1" autocomplete="off" aria-hidden="true" />
+        <label class="check"><input type="checkbox" id="f-ok" required /> Acepto que mis datos se usen solo para gestionar esta rifa.</label>
+        <div class="error" id="f-err"></div>
+        <button class="btn" style="width:100%" id="f-btn" type="submit">Apartar y ver cómo pagar</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal: listo, a pagar -->
+  <div class="modal" id="m-done" role="dialog" aria-modal="true" aria-labelledby="md-t">
+    <div class="modal-card">
+      <button class="modal-close" data-close aria-label="Cerrar">×</button>
+      <h3 id="md-t">¡Listo! Tus números quedaron apartados</h3>
+      <div class="chips" id="md-chips" style="margin:12px 0 8px"></div>
+      <div class="hint">Total a pagar</div>
+      <div class="done-total" id="md-total"></div>
+      <div class="methods-mini" id="md-methods"></div>
+      <div class="notice">Tus números quedan confirmados cuando verifiquemos el pago. Envía el comprobante para agilizarlo.</div>
+      <a class="btn green" style="width:100%" id="md-wa" target="_blank" rel="noopener">Enviar comprobante por WhatsApp</a>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
